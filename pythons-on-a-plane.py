@@ -7,7 +7,7 @@ from pygame.locals import *
 SKYBLUE = (135, 206, 235)
 
 # Create vars for screen size and width/height of screen
-size = 980, 660
+size = (1280, 720)
 width, height = size
 
 # Initialize pygame and set a screen variable

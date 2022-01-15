@@ -5,20 +5,23 @@ class Background(pygame.sprite.Sprite):
     def __init__(self, type):
         super().__init__() 
         if type == "cloud1":
-            cloud1_surf = pygame.image.load("graphics/PNG/cloud1.png") # might want to do .convert() when u have it all figured out
+            cloud1_surf = pygame.image.load("graphics/PNG/cloud1.png").convert_alpha() # might want to do .convert() when u have it all figured out
             self.image = cloud1_surf
+            self.image.set_alpha(150)
             self.rect = self.image.get_rect(midbottom = (1400, randint(50, 600)))
-        elif type == "cloud2":
-            cloud5_surf = pygame.image.load("graphics/PNG/cloud5.png")
+        elif type == "cloud5":
+            cloud5_surf = pygame.image.load("graphics/PNG/cloud5.png").convert_alpha()
             self.image = cloud5_surf
+            self.image.set_alpha(150)
             self.rect = self.image.get_rect(midbottom = (1400, randint(50, 600)))
         else:
-            cloud9_surf = pygame.image.load("graphics/PNG/cloud9.png")
+            cloud9_surf = pygame.image.load("graphics/PNG/cloud9.png").convert_alpha()
             self.image = cloud9_surf
+            self.image.set_alpha(150)
             self.rect = self.image.get_rect(midbottom = (1400, randint(50, 600)))
 
     def move_clouds(self):
-        self.rect.x -= 4
+        self.rect.x -= 2
 
     def update(self):
         self.move_clouds()

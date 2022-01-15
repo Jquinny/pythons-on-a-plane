@@ -23,7 +23,7 @@ backgrounds = pygame.sprite.Group()
 sky_surf = pygame.image.load("graphics/BG.png").convert()
 clock = pygame.time.Clock()
 timer = pygame.USEREVENT + 1
-pygame.time.set_timer(timer, 2000)
+pygame.time.set_timer(timer, 3000)
 
 # Main game loop
 running = True
@@ -36,10 +36,12 @@ while running:
         
         if event.type == timer:
             backgrounds.add(background.Background(clouds[random.randint(0,2)]))
+    
     screen.blit(sky_surf, (0,0))
-    # if statement for timing cloud spawn
+
     backgrounds.draw(screen)
     backgrounds.update()
+    
     pygame.display.update()
     clock.tick(60)
 

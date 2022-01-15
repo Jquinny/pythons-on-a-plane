@@ -7,8 +7,11 @@ from pygame.locals import *
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.original1 = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly (1).png')
-        self.original2 = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly (2).png')
+        self.original1 = pygame.image.load('graphics/plane/chopper1.gif')
+        self.original2 = pygame.image.load('graphics/plane/chopper2.gif')
+        self.original3 = pygame.image.load('graphics/plane/chopper3.gif')
+        self.original4 = pygame.image.load('graphics/plane/chopper4.gif')
+        self.original5 = pygame.image.load('graphics/plane/chopper5.gif')
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()
@@ -27,11 +30,17 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.original2, (232,159))
             self.animationState = 1
         elif self.animationState == 1:
-            self.image = pygame.transform.scale(self.original1, (232,159))
+            self.image = pygame.transform.scale(self.original3, (232,159))
+            self.animationState = 2
+        elif self.animationState == 2:
+            self.image = pygame.transform.scale(self.original4, (232,159))
+            self.animationState = 3
+        elif self.animationState == 3:
+            self.image = pygame.transform.scale(self.original5, (232,159))
+            self.animationState = 4
+        elif self.animationState == 4:
+            self.image = pygame.transform.scale(self.original5, (232,159))
             self.animationState = 0
-        
-
-        
     def update(self):
         self.player_input()
         self.player_animation()

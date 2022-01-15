@@ -3,6 +3,14 @@
 import pygame
 from sys import exit
 from pygame.locals import *
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        #self.image = pygame.image.load('')
+        self.rect = self.image.get_rect()
+
+
 pygame.init()
 pygame.display.set_caption('Pythons on a Plane')
 # Create vars for screen size and width/height of screen

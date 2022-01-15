@@ -7,13 +7,13 @@ from pygame.locals import *
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.original1 = pygame.image.load('graphics/plane/Fly (1).png')
-        self.original2 = pygame.image.load('graphics/plane/Fly (2).png')
-        self.shoot1 = pygame.image.load('graphics/plane/Shoot (1).png')
-        self.shoot2 = pygame.image.load('graphics/plane/Shoot (2).png')
-        self.shoot3 = pygame.image.load('graphics/plane/Shoot (3).png')
-        self.shoot4 = pygame.image.load('graphics/plane/Shoot (4).png')
-        self.shoot5 = pygame.image.load('graphics/plane/Shoot (5).png')
+        self.original1 = pygame.image.load('graphics/plane/Fly (1).png').convert_alpha()
+        self.original2 = pygame.image.load('graphics/plane/Fly (2).png').convert_alpha()
+        self.shoot1 = pygame.image.load('graphics/plane/Shoot (1).png').convert_alpha()
+        self.shoot2 = pygame.image.load('graphics/plane/Shoot (2).png').convert_alpha()
+        self.shoot3 = pygame.image.load('graphics/plane/Shoot (3).png').convert_alpha()
+        self.shoot4 = pygame.image.load('graphics/plane/Shoot (4).png').convert_alpha()
+        self.shoot5 = pygame.image.load('graphics/plane/Shoot (5).png').convert_alpha()
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()
@@ -61,10 +61,12 @@ class Player(pygame.sprite.Sprite):
 class Rocket(pygame.sprite.Sprite):
     def __init__(self,pos_x,pos_y):
         super().__init__()
-        self.image = pygame.image.load('graphics/bullet/shell.gif')
-        self.rect = self.image.get_rect(center = (pos_x+200,pos_y+120))
+        self.image = pygame.image.load('graphics/bullet/shell.gif').convert_alpha()
+        self.rect = self.image.get_rect(center = (pos_x+180,pos_y+118))
     def update(self):
         self.rect.x += 5
+        if self.rect.x >= 1400:
+            self.kill()
         
 
 pygame.init()

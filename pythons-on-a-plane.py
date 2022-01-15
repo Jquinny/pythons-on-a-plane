@@ -17,6 +17,8 @@ class Player(pygame.sprite.Sprite):
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()
+    def create_rocket(self):
+        return Rocket(self.rect.x,self.rect.y)
     def player_shoot(self):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.animationState = 2
@@ -56,29 +58,48 @@ class Player(pygame.sprite.Sprite):
         self.player_shoot()
         self.player_input()
         self.player_animation()
-            
+class Rocket(pygame.sprite.Sprite):
+    def __init__(self,pos_x,pos_y):
+        super().__init__()
+        self.image = pygame.image.load('graphics/bullet/shell.gif')
+        self.rect = self.image.get_rect(center = (pos_x+200,pos_y+120))
+    def update(self):
+        self.rect.x += 5
+        
 
 pygame.init()
 pygame.display.set_caption('Pythons on a Plane')
 # Create vars for screen size and width/height of screen
 size = 1280,720
 width, height = size
-
+#background
+background = pygame.image.load('graphics/backgrounds/colored_castle.png')
 # Initialize pygame and set a screen variable
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 #player
-player = pygame.sprite.GroupSingle()
-player.add(Player())
+player = Player()
+player_group = pygame.sprite.GroupSingle()
+player_group.add(player)
+
+#rocket 
+rocket_group = pygame.sprite.Group()
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-    player.draw(screen)
-    player.update()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            rocket_group.add(player.create_rocket())
+    screen.blit(background,(0,0))
+            
+    player_group.draw(screen)
+    player_group.update()
+    rocket_group.draw(screen)
+    rocket_group.update()
+    #rockets()
     pygame.display.update()
-    clock.tick(5)
+    clock.tick(60)
 

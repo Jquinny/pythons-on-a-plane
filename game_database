@@ -44,6 +44,3 @@ for person in users_by_score.each():
 
 
 
-
-
-

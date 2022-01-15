@@ -7,8 +7,8 @@ from pygame.locals import *
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.original1 = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly_(1).png')
-        self.original2 = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly_(2).png')
+        self.original1 = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly (1).png')
+        self.original2 = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly (2).png')
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()

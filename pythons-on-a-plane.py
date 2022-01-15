@@ -10,9 +10,19 @@ class Player(pygame.sprite.Sprite):
         self.original = pygame.image.load('pythons-on-a-plane/graphics/plane/Fly_(1).png')
         self.image = pygame.transform.scale(self.original, (232,159))
         self.rect = self.image.get_rect()
-    def player_input():
+    def player_input(self):
         keys = pygame.key.get_pressed()
-        if keys
+        if keys[pygame.K_a]:
+            self.rect.x += -10
+        elif keys[pygame.K_w]:
+            self.rect.y += -10
+        elif keys[pygame.K_s]:
+            self.rect.y += 10
+        elif keys[pygame.K_d]:
+            self.rect.x += 10
+    def update(self):
+        self.player_input()
+            
 
 pygame.init()
 pygame.display.set_caption('Pythons on a Plane')
@@ -34,6 +44,7 @@ while True:
             pygame.quit()
             exit()
     player.draw(screen)
+    player.update()
     pygame.display.update()
     clock.tick(60)
 

@@ -12,33 +12,58 @@ firebaseConfig = {
   'measurementId': "G-SYX921C8GG"
 }
 
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
 
+"""
 data = {
 
     'user1': {
         'name': 'Zack', 
-        'score': '800'
+        'score': 800
     },
     'user2': {
         'name': 'Eric', 
-        'score': '850'
+        'score': 850
     },
     'user3': {
         'name': 'Joey', 
-        'score': '900'
+        'score': 900
     },
     'user4': {
         'name': 'Owen', 
-        'score': '950'
+        'score': 950
     }
 
 }
+"""
 
-users_by_score = db.child('users').order_by_child('score').get()
-for person in users_by_score.each():
-    print(person.val())
+firebase = pyrebase.initialize_app(firebaseConfig)
+db = firebase.database()
+
+
+def addScore(username, name, score): 
+    db.child('users').child(username).update({'name': name, 'score': score})
+
+def main():
+
+    leaderboard = []
+    users_by_score = db.child('users').order_by_child('score').limit_to_first(5).get()
+
+    for person in users_by_score.each():
+        leaderboard.append(person)  
+
+    addScore('user5', 'Larry', 5000)
+
+
+if __name__ == "__main__":
+    main()
+
+    
+
+   
+   
+
+
+
 
 
 

@@ -9,9 +9,17 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.original1 = pygame.image.load('graphics/plane/Fly (1).png')
         self.original2 = pygame.image.load('graphics/plane/Fly (2).png')
+        self.shoot1 = pygame.image.load('graphics/plane/Shoot (1).png')
+        self.shoot2 = pygame.image.load('graphics/plane/Shoot (2).png')
+        self.shoot3 = pygame.image.load('graphics/plane/Shoot (3).png')
+        self.shoot4 = pygame.image.load('graphics/plane/Shoot (4).png')
+        self.shoot5 = pygame.image.load('graphics/plane/Shoot (5).png')
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()
+    def player_shoot(self):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.animationState = 2
     def player_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
@@ -29,7 +37,23 @@ class Player(pygame.sprite.Sprite):
         elif self.animationState == 1:
             self.image = pygame.transform.scale(self.original1, (232,159))
             self.animationState = 0
+        elif self.animationState == 2:
+            self.image = pygame.transform.scale(self.shoot1, (232,159))
+            self.animationState = 3
+        elif self.animationState == 3:
+            self.image = pygame.transform.scale(self.shoot2, (232,159))
+            self.animationState = 4
+        elif self.animationState == 4:
+            self.image = pygame.transform.scale(self.shoot3, (232,159))
+            self.animationState = 5
+        elif self.animationState == 5:
+            self.image = pygame.transform.scale(self.shoot4, (232,159))
+            self.animationState = 6
+        elif self.animationState == 6:
+            self.image = pygame.transform.scale(self.shoot5, (232,159))
+            self.animationState = 0
     def update(self):
+        self.player_shoot()
         self.player_input()
         self.player_animation()
             
@@ -56,5 +80,5 @@ while True:
     player.draw(screen)
     player.update()
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(5)
 

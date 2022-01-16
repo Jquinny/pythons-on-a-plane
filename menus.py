@@ -6,6 +6,7 @@ import pygame_menu
 import leaderboard
 import random
 import howtoplay
+import credits_menu
 
 def main_menu():
 	# Initialize main menu appearance
@@ -18,8 +19,8 @@ def main_menu():
 	play_img, how_img, lboard_img, cursor_img = button_images()
 	cursor_rect = cursor_img.get_rect()
 	hand = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND)
-	font = pygame.font.Font("graphics/bubble.ttf", 36)
-	credits = font.render("CREDITS", True, (255, 255, 255))
+	bubble_font = pygame.font.Font("graphics/bubble.ttf", 36)
+	credits = bubble_font.render("CREDITS", True, (255, 255, 255))
 
 	# Main Menu loop
 	running = True
@@ -59,15 +60,15 @@ def main_menu():
 				# How to Play Menu
 				if how_rect.collidepoint(pos):
 					pygame.mouse.set_cursor(*pygame.cursors.arrow)
-					howtoplay.how_menu(screen)
+					howtoplay.how_menu(screen, how_img, bubble_font, hand)
 				# Leaderboard Menu
 				if lboard_rect.collidepoint(pos):
 					pygame.mouse.set_cursor(*pygame.cursors.arrow)
-					leaderboard.leaderboard_menu(screen, lboard_img)
+					leaderboard.leaderboard_menu(screen, lboard_img, hand)
 				# Credits Menu
 				if credits_rect.collidepoint(pos):
 					pygame.mouse.set_cursor(*pygame.cursors.arrow)
-					print('credits') # <----- PUT CREDIT MENU HERE
+					credits_menu.credits_screen(screen, bubble_font, hand)
 
 
 def plane_menu_images():

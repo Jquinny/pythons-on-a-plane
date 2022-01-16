@@ -83,7 +83,7 @@ def game():
                     rocket.getHit = True
             for player in player_group:
                 if pygame.sprite.spritecollideany(player,enemies):
-                    player.image = pygame.transform.scale(player.dead, (232,159))
+                    player.image = pygame.transform.scale(player.dead, (116,80))
                     #gamestate = 2
             pygame.display.update()
             clock.tick(60)
@@ -104,42 +104,43 @@ class Player(pygame.sprite.Sprite):
         self.dead = pygame.image.load('graphics/plane/Dead (1).png').convert_alpha()
         self.getHit = False
         self.animationState = 0
-        self.image = pygame.transform.scale(self.original1, (232,159))
+        self.image = pygame.transform.scale(self.original1, (116,80))
         self.rect = self.image.get_rect()
+        self.rect.y = 360
         self.stopwatch = 0
     def create_rocket(self):
         return Rocket(self.rect.x,self.rect.y)
     def player_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and self.rect.x > -100:
             self.rect.x += -10
-        if keys[pygame.K_w]:
+        if keys[pygame.K_w] and self.rect.y > -50:
             self.rect.y += -10
-        if keys[pygame.K_s]:
+        if keys[pygame.K_s] and self.rect.y < 650:
             self.rect.y += 10
-        if keys[pygame.K_d]:
+        if keys[pygame.K_d] and self.rect.x < 1100:
             self.rect.x += 10
     def player_animation(self):
         if self.animationState == 0:
-            self.image = pygame.transform.scale(self.original2, (232,159))
+            self.image = pygame.transform.scale(self.original2, (116,80))
             self.animationState = 1
         elif self.animationState == 1:
-            self.image = pygame.transform.scale(self.original1, (232,159))
+            self.image = pygame.transform.scale(self.original1, (116,80))
             self.animationState = 0
         elif self.animationState == 2:
-            self.image = pygame.transform.scale(self.shoot1, (232,159))
+            self.image = pygame.transform.scale(self.shoot1, (116,80))
             self.animationState = 3
         elif self.animationState == 3:
-            self.image = pygame.transform.scale(self.shoot2, (232,159))
+            self.image = pygame.transform.scale(self.shoot2, (116,80))
             self.animationState = 4
         elif self.animationState == 4:
-            self.image = pygame.transform.scale(self.shoot3, (232,159))
+            self.image = pygame.transform.scale(self.shoot3, (116,80))
             self.animationState = 5
         elif self.animationState == 5:
-            self.image = pygame.transform.scale(self.shoot4, (232,159))
+            self.image = pygame.transform.scale(self.shoot4, (116,80))
             self.animationState = 6
         elif self.animationState == 6:
-            self.image = pygame.transform.scale(self.shoot5, (232,159))
+            self.image = pygame.transform.scale(self.shoot5, (116,80))
             self.animationState = 0
     def update(self):
         self.player_input()
@@ -163,7 +164,7 @@ class Rocket(pygame.sprite.Sprite):
         self.thirteen = pygame.image.load('graphics/explosion/13.gif').convert_alpha()
         self.fourteen = pygame.image.load('graphics/explosion/14.gif').convert_alpha()
         self.fifteen = pygame.image.load('graphics/explosion/15.gif').convert_alpha()
-        self.rect = self.image.get_rect(center = (pos_x+180,pos_y+118))
+        self.rect = self.image.get_rect(center = (pos_x+90,pos_y+59))
         self.speed = 0
         self.getHit = False
         self.animationState = -1
@@ -233,7 +234,7 @@ class Enemy(pygame.sprite.Sprite):
         self.original1 = pygame.image.load('graphics/enemy/enemy1.png')
         self.original2 = pygame.image.load('graphics/enemy/enemy2.png')
         self.dead = pygame.image.load('graphics/enemy/enemy_dead.png')
-        self.image = pygame.transform.flip(pygame.transform.scale(self.original1, (232,159)),True,False)
+        self.image = pygame.transform.flip(pygame.transform.scale(self.original1, (116,80)),True,False)
         self.rect = self.image.get_rect(center = (pos_x,pos_y))
         self.animationState = 0
         self.stopwatch = 0
@@ -241,13 +242,13 @@ class Enemy(pygame.sprite.Sprite):
         self.getHit = False
     def enemy_animation(self):
         if self.animationState == 0:
-            self.image = pygame.transform.flip(pygame.transform.scale(self.original2, (232,159)),True,False)
+            self.image = pygame.transform.flip(pygame.transform.scale(self.original2, (116,80)),True,False)
             self.animationState = 1
         elif self.animationState == 1:
-            self.image = pygame.transform.flip(pygame.transform.scale(self.original1, (232,159)),True,False)
+            self.image = pygame.transform.flip(pygame.transform.scale(self.original1, (116,80)),True,False)
             self.animationState = 0
         elif self.animationState == 2:
-            self.image = pygame.transform.flip(pygame.transform.scale(self.dead, (232,159)),True,False)
+            self.image = pygame.transform.flip(pygame.transform.scale(self.dead, (116,80)),True,False)
     def update(self):
         self.enemy_animation()
         self.rect.x -= 10

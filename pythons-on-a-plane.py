@@ -87,6 +87,11 @@ player = Player()
 player_group = pygame.sprite.GroupSingle()
 player_group.add(player)
 
+#sounds
+pygame.mixer.music.load('sfx/calm.wav')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.1)
+shoot = pygame.mixer.Sound('sfx/playershoot.wav')
 #rocket 
 rocket_group = pygame.sprite.Group()
 while True:
@@ -99,6 +104,8 @@ while True:
             if (time - player.stopwatch) > 240:
                 rocket_group.add(player.create_rocket())
                 player.stopwatch = pygame.time.get_ticks()
+                shoot.play()
+                shoot.set_volume(0.2)
     screen.blit(background,(0,0))
             
     player_group.draw(screen)

@@ -2,6 +2,8 @@
 
 import pygame
 from pygame.locals import *
+import background
+import obstacles
 
 def main_menu():
 	# Initialize main menu appearance

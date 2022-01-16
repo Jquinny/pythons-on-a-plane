@@ -25,4 +25,5 @@ def retrieveLeaderboard():
     for person in users_by_score.each():
         leaderboard.append(person)  
 
+    leaderboard = leaderboard.reverse()
     return leaderboard

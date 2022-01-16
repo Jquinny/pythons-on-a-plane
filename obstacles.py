@@ -4,16 +4,24 @@ from random import randint
 class GroundObstacles(pygame.sprite.Sprite):
     def __init__(self, type):
         super().__init__() 
-        if type == "castle grey":
-            castle = pygame.image.load("graphics/PNG/castle_grey.png").convert_alpha()
-            self.image = castle
-            self.image = pygame.transform.scale(self.image, (408, 364))
-            self.rect = self.image.get_rect(midtop = (1400, randint(400, 550)))
-        elif type == "tower grey":
-            tower = pygame.image.load("graphics/PNG/tower_grey.png").convert_alpha()
-            self.image = tower
-            self.image = pygame.transform.scale(self.image, (132, 454))
-            self.rect = self.image.get_rect(midtop = (1400, randint(250, 550)))
+        if type == "tree":
+            surf1 = pygame.Surface((150, 400))
+            surf1.fill("Black")
+            self.image =  surf1
+            self.rect = self.image.get_rect(bottomleft = (1300, 780))
+            #tree = pygame.image.load("graphics/PNG/tree03.png").convert_alpha()
+            #self.image = tree
+            #self.image = pygame.transform.scale(self.image, (204, 439))
+            #self.rect = self.image.get_rect(bottomleft = (1300, 780))
+        elif type == "grey house":
+            surf2 = pygame.Surface((100, 450))
+            surf2.fill("Red")
+            self.image =  surf2
+            self.rect = self.image.get_rect(bottomleft = (1400, 780))
+            #house = pygame.image.load("graphics/PNG/house_grey_front.png").convert_alpha()
+            #self.image = house
+            #self.image = pygame.transform.scale(self.image, (204, 348))
+            #self.rect = self.image.get_rect(bottomleft = (1400, 780))
 
     def move_obj(self):
         self.rect.x -= 3
@@ -28,6 +36,7 @@ class GroundObstacles(pygame.sprite.Sprite):
 
 
 class AirObstacles(pygame.sprite.Sprite):
-    def __init__(self, type):
+    def __init__():
         super().__init__()
-        pass # need stuff here
+        
+        

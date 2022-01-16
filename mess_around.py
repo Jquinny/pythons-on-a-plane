@@ -15,7 +15,7 @@ pygame.init()
 size = (1280, 720)
 width, height = size
 clouds = ["cloud1", "cloud5", "cloud9"] # ----------------------------------------------- my important variables ---------------------------
-ground_obstacles = ["castle grey", "tower grey"]
+ground_obstacles = ["grey house", "tree"]
 
 # set a screen variable
 screen = pygame.display.set_mode(size)
@@ -31,7 +31,16 @@ cloud_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(cloud_timer, 3000)
 
 ground_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(ground_timer, 1750) # -------------------------------------------------------------------------------------------------
+pygame.time.set_timer(ground_timer, 2000) # -------------------------------------------------------------------------------------------------
+
+font = pygame.font.Font(None, 50)
+start_time = 0
+def score():
+    current_time = pygame.time.get_ticks() - start_time
+    time = str(current_time/1000)
+    score_surf = font.render(time, False, (64, 64, 64))
+    score_rect = score_surf.get_rect(topleft = (0,0))
+    screen.blit(score_surf, score_rect)
 
 # Main game loop
 running = True
@@ -54,7 +63,7 @@ while running:
     ground_objs.draw(screen)
     backgrounds.update()
     ground_objs.update()
-    
+    score()
     pygame.display.update()
     clock.tick(60)
 

@@ -137,7 +137,6 @@ def game():
             if (frame_counter > 120) and (checker == True):
                 air_speed -= 3
                 ground_speed -= 10
-                print(ground_speed, air_speed)
                 frame_counter = 0
                 if (air_speed < 60) or (ground_speed < 120):
                     checker = False

@@ -86,6 +86,10 @@ class Enemy(pygame.sprite.Sprite):
      def update(self):
         self.enemy_animation()
         self.rect.x -= 10
+        if self.rect.y < player.rect.y:
+            self.rect.y += 2
+        if self.rect.y > player.rect.y:
+            self.rect.y -= 2
 pygame.init()
 pygame.display.set_caption('Pythons on a Plane')
 pygame.mouse.set_visible(False)
@@ -127,7 +131,7 @@ while True:
                 shoot.play()
                 shoot.set_volume(0.2)
     if (time - enemyStopwatch) > 2000:
-        enemies.add(Enemy(1400,randint(0,720)))
+        enemies.add(Enemy(1400,randint(100,620)))
         enemyStopwatch = pygame.time.get_ticks()
     screen.blit(background,(0,0))
             

@@ -2,7 +2,6 @@
 
 import pygame
 from pygame.locals import *
-import pygame_menu
 
 def main_menu():
 	# Initialize main menu appearance

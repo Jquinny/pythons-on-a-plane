@@ -36,6 +36,10 @@ def game():
 
     frame_counter = 0
     checker = True
+    #player (weird bug that forces me to put this here)
+    player = Player()
+    player_group = pygame.sprite.GroupSingle()
+    player_group.add(player)
 
     while running:
         if gamestate == 0:
@@ -44,16 +48,17 @@ def game():
                 if event.type == QUIT:
                     running = False
                 # If any of the buttons are clicked
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    if play_rect.collidepoint(pos):
-                        gamestate = 1 # <-------- PUT GAMEPLAY FUNCTION HERE
-                    if how_rect.collidepoint(pos):
-                        pass # <------ PUT HOW TO PLAY MENU HERE
-                    if lboard_rect.collidepoint(pos):
-                        pass # <----- PUT LEADERBOARD MENU HERE
-                    if credits_rect.collidepoint(pos):
-                        print('credits') # <----- PUT CREDIT MENU HERE
+                if pygame.time.get_ticks() > 5000: #ensures everything is loaded properly before startup
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        if play_rect.collidepoint(pos):
+                            gamestate = 1 # <-------- PUT GAMEPLAY FUNCTION HERE
+                        if how_rect.collidepoint(pos):
+                            pass # <------ PUT HOW TO PLAY MENU HERE
+                        if lboard_rect.collidepoint(pos):
+                            pass # <----- PUT LEADERBOARD MENU HERE
+                        if credits_rect.collidepoint(pos):
+                            print('credits') # <----- PUT CREDIT MENU HERE
             # Plane animation
             screen.blit(background1, (0, 0))
             plane_rect, frame_flag = plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag)
@@ -250,11 +255,7 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     start_time = 0
     font = pygame.font.Font(None, 50)
-    # --------------------------------------------------------------------------------------------
-    #player
-    player = Player()
-    player_group = pygame.sprite.GroupSingle()
-    player_group.add(player)
+    # -------------------------------------------------------------------------------------------
 
     #sounds
     pygame.mixer.music.load('sfx/calm.wav')

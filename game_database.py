@@ -26,17 +26,3 @@ def retrieveLeaderboard():
         leaderboard.append(person)  
 
     return leaderboard
-
-
-    
-
-   
-   
-
-
-
-
-
-
-
-

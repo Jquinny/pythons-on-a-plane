@@ -23,7 +23,7 @@ def retrieveLeaderboard():
     users_by_score = db.child('users').order_by_child('score').get()
 
     for person in users_by_score.each():
-        leaderboard.append(person)  
-
-    leaderboard = leaderboard.reverse()[:4]
+        leaderboard.append(person)
+    leaderboard.reverse()
+    
     return leaderboard

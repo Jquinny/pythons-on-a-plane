@@ -69,7 +69,6 @@ def game():
                 enemyStopwatch = pygame.time.get_ticks()
             screen.blit(background,(0,0))
             
-            pygame.sprite.groupcollide(rocket_group,enemies,False,False)
             player_group.draw(screen)
             player_group.update()
             enemies.draw(screen)
@@ -82,9 +81,15 @@ def game():
             for rocket in rocket_group:
                 if pygame.sprite.spritecollideany(rocket,enemies):
                     rocket.getHit = True
+            for player in player_group:
+                if pygame.sprite.spritecollideany(player,enemies):
+                    player.image = pygame.transform.scale(player.dead, (232,159))
+                    #gamestate = 2
             pygame.display.update()
             clock.tick(60)
-
+        elif gamestate == 2:
+            #GAMEOVER SCREEN
+            pass
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -96,6 +101,8 @@ class Player(pygame.sprite.Sprite):
         self.shoot3 = pygame.image.load('graphics/plane/Shoot (3).png').convert_alpha()
         self.shoot4 = pygame.image.load('graphics/plane/Shoot (4).png').convert_alpha()
         self.shoot5 = pygame.image.load('graphics/plane/Shoot (5).png').convert_alpha()
+        self.dead = pygame.image.load('graphics/plane/Dead (1).png').convert_alpha()
+        self.getHit = False
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()

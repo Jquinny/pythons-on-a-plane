@@ -140,13 +140,22 @@ def game():
             for rocket in rocket_group:
                 if pygame.sprite.spritecollideany(rocket,enemies):
                     rocket.getHit = True
+                if pygame.sprite.spritecollideany(rocket,ground_group):
+                    rocket.getHit = True
+                if pygame.sprite.spritecollideany(rocket,air_group):
+                    rocket.getHit = True
                 if rocket.animationState == 0:
                     enemyDie.play()
                     enemyDie.set_volume(0.2)
             for player in player_group:
                 if pygame.sprite.spritecollideany(player,enemies):
                     player.image = pygame.transform.scale(player.dead, (116,80))
+                if pygame.sprite.spritecollideany(player,air_group):
+                    player.image = pygame.transform.scale(player.dead, (116,80))
+                if pygame.sprite.spritecollideany(player,ground_group):
+                    player.image = pygame.transform.scale(player.dead, (116,80))
                     #gamestate = 2
+            pygame.sprite.groupcollide(rocket_group,air_group,False,True)
             pygame.display.update()
             clock.tick(60)
         elif gamestate == 2:
@@ -194,7 +203,7 @@ def plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag):
 
 def score():
         current_time = pygame.time.get_ticks() - start_time
-        time = str(current_time/1000)
+        time = 'Score: ' + str(int(current_time/1000))
         score_surf = font.render(time, False, (64, 64, 64))
         score_rect = score_surf.get_rect(topleft = (0,0))
         screen.blit(score_surf, score_rect) 
@@ -253,6 +262,7 @@ if __name__ == "__main__":
     pygame.mixer.music.set_volume(0.1)
     shoot = pygame.mixer.Sound('sfx/playershoot.wav')
     enemyDie = pygame.mixer.Sound('sfx/enemy_die.wav')
+    crash = pygame.mixer.Sound('sfx/crash.mp3')
     #rocket 
     rocket_group = pygame.sprite.Group()
     #enemies

@@ -4,7 +4,7 @@ import game_database
 import pygame
 from pygame.locals import *
 
-def game_over_screen(screen, score):
+def game_over_screen(screen, score, hand):
     font = pygame.font.Font(None, 32)
     input_box = pygame.Rect(545, 540, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
@@ -14,12 +14,28 @@ def game_over_screen(screen, score):
     text = ''
     done = False
     background = pygame.image.load("graphics/BG.png")
+    # Return to Main Menu Button
+    back_arrow = pygame.image.load("graphics/white_arrow.png")
+    back_arrow = pygame.transform.scale(back_arrow, (75, 75))
+    back_arrow = pygame.transform.flip(back_arrow, True, True)
+    back_rect = back_arrow.get_rect(bottomleft=(25,695))
 
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+            # Return button
+            pos = pygame.mouse.get_pos()
+            if back_rect.collidepoint(pos):
+                pygame.mouse.set_cursor(hand)
+            else:
+                pygame.mouse.set_cursor(*pygame.cursors.arrow)
+            # If any of the buttons are clicked
             if event.type == pygame.MOUSEBUTTONDOWN:
+                # Gameplay Menu
+                if back_rect.collidepoint(pos):
+                    pygame.mouse.set_cursor(*pygame.cursors.arrow)
+                    return
                 # If the user clicked on the input_box rect.
                 if input_box.collidepoint(event.pos):
                     # Toggle the active variable.
@@ -42,6 +58,7 @@ def game_over_screen(screen, score):
         background = pygame.transform.scale(background, (1280, 1280)) # 1280, 1280
         screen.blit(background, (0, 0))
         add_text(screen, score)
+        screen.blit(back_arrow,back_rect)
         # Render the current text.
         txt_surface = font.render(text, True, color)
         # Resize the box if the text is too long.
@@ -53,7 +70,7 @@ def game_over_screen(screen, score):
         # Blit the input_box rect.
         pygame.draw.rect(screen, color, input_box, 2)
         pygame.display.flip()
-        
+    pygame.quit()
 
 def add_text(screen, score):
     pos = (390, 220)

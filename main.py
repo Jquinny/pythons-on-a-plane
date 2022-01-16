@@ -218,7 +218,7 @@ def game():
             clock.tick(60)
         elif gamestate == 2:
             #GAMEOVER SCREEN
-            game_over.game_over_screen(screen, player_score)
+            game_over.game_over_screen(screen, player_score, hand)
 
             player_group.remove(player)
             player_group.add(Player())

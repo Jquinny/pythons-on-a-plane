@@ -20,10 +20,10 @@ def addScore(username, score):
 
 def retrieveLeaderboard():
     leaderboard = []
-    users_by_score = db.child('users').order_by_child('score').limit_to_first(5).get()
+    users_by_score = db.child('users').order_by_child('score').get()
 
     for person in users_by_score.each():
         leaderboard.append(person)  
 
-    leaderboard = leaderboard.reverse()
+    leaderboard = leaderboard.reverse()[:4]
     return leaderboard

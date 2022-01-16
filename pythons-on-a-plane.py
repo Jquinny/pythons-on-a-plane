@@ -3,6 +3,7 @@
 import pygame
 from sys import exit
 from pygame.locals import *
+from random import randint
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -66,8 +67,25 @@ class Rocket(pygame.sprite.Sprite):
         self.rect.x += self.speed
         if self.rect.x >= 1400:
             self.kill()
-        
-
+class Enemy(pygame.sprite.Sprite):
+     def __init__(self,pos_x,pos_y):
+        super().__init__()
+        self.original1 = pygame.image.load('graphics/enemy/enemy1.png')
+        self.original2 = pygame.image.load('graphics/enemy/enemy2.png')
+        self.image = pygame.transform.flip(pygame.transform.scale(self.original1, (232,159)),True,False)
+        self.rect = self.image.get_rect(center = (pos_x,pos_y))
+        self.animationState = 0
+        self.stopwatch = 0
+     def enemy_animation(self):
+        if self.animationState == 0:
+            self.image = pygame.transform.flip(pygame.transform.scale(self.original2, (232,159)),True,False)
+            self.animationState = 1
+        elif self.animationState == 1:
+            self.image = pygame.transform.flip(pygame.transform.scale(self.original1, (232,159)),True,False)
+            self.animationState = 0
+     def update(self):
+        self.enemy_animation()
+        self.rect.x -= 10
 pygame.init()
 pygame.display.set_caption('Pythons on a Plane')
 pygame.mouse.set_visible(False)
@@ -91,25 +109,34 @@ pygame.mixer.music.set_volume(0.1)
 shoot = pygame.mixer.Sound('sfx/playershoot.wav')
 #rocket 
 rocket_group = pygame.sprite.Group()
+#enemies
+enemies = pygame.sprite.Group()
+enemyStopwatch = 0
+
 while True:
+    time = pygame.time.get_ticks()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            time = pygame.time.get_ticks()
             if (time - player.stopwatch) > 480:
                 rocket_group.add(player.create_rocket())
                 player.stopwatch = pygame.time.get_ticks()
                 player.animationState = 2
                 shoot.play()
                 shoot.set_volume(0.2)
+    if (time - enemyStopwatch) > 2000:
+        enemies.add(Enemy(1400,randint(0,720)))
+        enemyStopwatch = pygame.time.get_ticks()
     screen.blit(background,(0,0))
             
     player_group.draw(screen)
     player_group.update()
     rocket_group.draw(screen)
     rocket_group.update()
+    enemies.draw(screen)
+    enemies.update()
     pygame.display.update()
     clock.tick(60)
 

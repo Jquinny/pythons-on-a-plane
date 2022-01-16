@@ -14,28 +14,13 @@ def main_menu():
 	screen.blit(background, (0, 0))
 	pygame.display.update()
 	#cloud1, cloud2, cloud3, cloud4, cloud5, cloud6 = cloud_images()
-	play_img, how_img, lboard_img = button_images()
+	play_img, how_img, lboard_img, cursor_img = button_images()
+	cursor_rect = cursor_img.get_rect()
 	# Main Menu loop
 	running = True
 	frame_flag = True
 	opacity = 0
 	while running:
-		for event in pygame.event.get():
-		# If user hits the x button on pygame window
-			if event.type == QUIT:
-				running = False
-			# If any of the buttons are clicked
-			if event.type == pygame.MOUSEBUTTONDOWN:
-				pos = pygame.mouse.get_pos()
-				if play_rect.collidepoint(pos):
-					pass # <-------- PUT GAMEPLAY FUNCTION HERE
-				if how_rect.collidepoint(pos):
-					pass # <------ PUT HOW TO PLAY MENU HERE
-				if lboard_rect.collidepoint(pos):
-					pass # <----- PUT LEADERBOARD MENU HERE
-				if credits_rect.collidepoint(pos):
-					print('credits') # <----- PUT CREDIT MENU HERE
-
 		# Plane animation
 		screen.blit(background, (0, 0))
 		plane_rect, frame_flag = plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag)
@@ -51,6 +36,48 @@ def main_menu():
 		pygame.display.update()
 		opacity += 3
 
+		for event in pygame.event.get():
+		# If user hits the x button on pygame window
+			if event.type == QUIT:
+				running = False
+			# Hovering on buttons, change cursor icon
+			pos = pygame.mouse.get_pos()
+			if play_rect.collidepoint(pos) or how_rect.collidepoint(pos) or lboard_rect.collidepoint(pos) or credits_rect.collidepoint(pos):
+				pygame.mouse.set_visible(False)
+				cursor_rect.center = pos
+				screen.blit(cursor_img, cursor_rect)
+				pygame.display.update()
+			else:
+				pygame.mouse.set_visible(True)
+			# If any of the buttons are clicked
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				pos = pygame.mouse.get_pos()
+				if play_rect.collidepoint(pos):
+					pygame.mouse.set_cursor(*pygame.cursors.tri_right)
+					game()
+					pass # <-------- PUT GAMEPLAY FUNCTION HERE
+				if how_rect.collidepoint(pos):
+					pass # <------ PUT HOW TO PLAY MENU HERE
+				if lboard_rect.collidepoint(pos):
+					pass # <----- PUT LEADERBOARD MENU HERE
+				if credits_rect.collidepoint(pos):
+					print('credits') # <----- PUT CREDIT MENU HERE
+'''
+		# Plane animation
+		screen.blit(background, (0, 0))
+		plane_rect, frame_flag = plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag)
+
+		# Buttons / GUI Functionality
+		play_rect = buttons(play_img, opacity, (width/2, height/2))
+		how_rect = buttons(how_img, opacity, (320, 550))
+		lboard_rect = buttons(lboard_img, opacity, (920, 550))
+		font = pygame.font.SysFont(None, 36)
+		credits = font.render("CREDITS", True, (255, 255, 255))
+		credits_rect = credits.get_rect(center=(width/2, 650))
+		screen.blit(credits, credits_rect)
+		pygame.display.update()
+		opacity += 3
+'''
 
 def plane_menu_images():
 	''' Loads plane images and returns them after manipulation '''
@@ -114,7 +141,9 @@ def button_images():
 	how_img = pygame.transform.scale(how_img, (300, 200))
 	lboard_img = pygame.image.load("graphics/leaderboard.png")
 	lboard_img = pygame.transform.scale(lboard_img, (505, 135))
-	return play_img, how_img, lboard_img #cloud6
+	cursor_img = pygame.image.load("graphics/target.png")
+	cursor_img = pygame.transform.scale(cursor_img, (50, 50))
+	return play_img, how_img, lboard_img, cursor_img
 
 
 def buttons(img, opacity, position):
@@ -123,6 +152,17 @@ def buttons(img, opacity, position):
 	rect = img.get_rect(center=position)
 	screen.blit(img, rect)
 	return rect
+
+
+def game():
+	running = True
+	while running:
+		screen.fill((0, 0, 0))
+		pygame.display.flip()
+		for event in pygame.event.get():
+		# If user hits the x button on pygame window
+			if event.type == QUIT:
+				running = False
 
 if __name__ == "__main__":
 	# CONSTANT values like colours here

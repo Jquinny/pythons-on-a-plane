@@ -28,6 +28,7 @@ def main_menu():
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				pos = pygame.mouse.get_pos()
 				if play_rect.collidepoint(pos):
+					pygame.mouse.set_cursor(*pygame.cursors.arrow)
 					pass # <-------- PUT GAMEPLAY FUNCTION HERE
 				if how_rect.collidepoint(pos):
 					pass # <------ PUT HOW TO PLAY MENU HERE

@@ -1,0 +1,3 @@
+#LEADERBOARD MENU, COMPATIBILE WITH FIREBASE
+
+import game_database

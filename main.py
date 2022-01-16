@@ -123,11 +123,11 @@ def game():
             backgrounds.draw(screen)
             backgrounds.update()
 
-            air_group.draw(screen)
-            air_group.update()
-
             ground_group.draw(screen)
             ground_group.update()
+
+            air_group.draw(screen)
+            air_group.update()
 
             score()
                     

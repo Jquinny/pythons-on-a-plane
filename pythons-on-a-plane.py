@@ -20,9 +20,6 @@ class Player(pygame.sprite.Sprite):
         self.stopwatch = 0
     def create_rocket(self):
         return Rocket(self.rect.x,self.rect.y)
-    def player_shoot(self):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.animationState = 2
     def player_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
@@ -56,7 +53,6 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.shoot5, (232,159))
             self.animationState = 0
     def update(self):
-        self.player_shoot()
         self.player_input()
         self.player_animation()
 class Rocket(pygame.sprite.Sprite):
@@ -74,6 +70,7 @@ class Rocket(pygame.sprite.Sprite):
 
 pygame.init()
 pygame.display.set_caption('Pythons on a Plane')
+pygame.mouse.set_visible(False)
 # Create vars for screen size and width/height of screen
 size = 1280,720
 width, height = size
@@ -101,9 +98,10 @@ while True:
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             time = pygame.time.get_ticks()
-            if (time - player.stopwatch) > 240:
+            if (time - player.stopwatch) > 480:
                 rocket_group.add(player.create_rocket())
                 player.stopwatch = pygame.time.get_ticks()
+                player.animationState = 2
                 shoot.play()
                 shoot.set_volume(0.2)
     screen.blit(background,(0,0))

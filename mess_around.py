@@ -33,7 +33,7 @@ cloud_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(cloud_timer, 3000)
 
 ground_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(ground_timer, 20000) 
+pygame.time.set_timer(ground_timer, 9000) 
 
 air_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(air_timer, 2000) 
@@ -58,16 +58,18 @@ while running:
         
         if event.type == cloud_timer:
             backgrounds.add(background.Background(clouds[random.randint(0,2)]))
+            print(backgrounds.sprites())
 
         if event.type == ground_timer:
-            obj1 = random.randint(0,1)
-            ground_group.add(obstacles.GroundObstacles(ground_obstacles[obj1]))
+            ground_group.add(obstacles.GroundObstacles(ground_obstacles[random.randint(0,2)]))
+            print(ground_group.sprites())
 
         if event.type == air_timer:
             obj2 = random.randint(0,1)
             x = random.randint(400, 1280)
             slope = random.randint(1,10)
-            air_group.add(obstacles.AirObstacles1(air_obstacles[0], x, slope))
+            air_group.add(obstacles.AirObstacles(air_obstacles[0], x, slope))
+            print(air_group.sprites())
     
     screen.blit(sky_surf_scaled, (0,0))
 
@@ -83,4 +85,6 @@ while running:
     pygame.display.update()
     clock.tick(60)
 
+air_group.empty()
+ground_group.empty()
 pygame.quit()

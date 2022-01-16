@@ -9,7 +9,7 @@ class GroundObstacles(pygame.sprite.Sprite):
             surf1 = pygame.Surface((150, 350))
             surf1.fill("Black")
             self.image = surf1
-            self.rect = self.image.get_rect(bottomleft = (1300, 780))
+            self.rect = self.image.get_rect(bottomleft = (1400, 780))
 
         elif type == "ground obj 2":
             surf2 = pygame.Surface((100, 400))
@@ -19,9 +19,9 @@ class GroundObstacles(pygame.sprite.Sprite):
         
         elif type == "ground obj 3":
             surf3 = pygame.Surface((75, 450))
-            surf3.fill("White")
+            surf3.fill("Green")
             self.image = surf3
-            self.rect = self.image.get_rect(bottomleft = (1350, 780))
+            self.rect = self.image.get_rect(bottomleft = (1400, 780))
 
     def move_obj(self):
         self.rect.x -= 3
@@ -35,7 +35,7 @@ class GroundObstacles(pygame.sprite.Sprite):
             self.kill()
 
 
-class AirObstacles1(pygame.sprite.Sprite):
+class AirObstacles(pygame.sprite.Sprite):
     def __init__(self, type, x, m):
         super().__init__()
         self.type = type

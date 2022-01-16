@@ -4,24 +4,39 @@ import pygame
 from player import Player
 from enemy import Enemy
 from rockets import Rocket
+import background
 from pygame.locals import *
+import random
 from random import randint
+import obstacles
+import background
 
 def game():
     # Initialize main menu appearance
-    background = pygame.image.load("graphics/BG.png")
-    background = pygame.transform.scale(background, (1280, 1280)) # 1280, 1280
+    background1 = pygame.image.load("graphics/BG.png")
+    background1 = pygame.transform.scale(background1, (1280, 1280)) # 1280, 1280
     plane_fly1, plane_fly2 = plane_menu_images()
     plane_rect = plane_fly1.get_rect(topright=(1500, 100)) # 1500, 100 start for moving
-    screen.blit(background, (0, 0))
-    #cloud1, cloud2, cloud3, cloud4, cloud5, cloud6 = cloud_images()
+    screen.blit(background1, (0, 0))
     play_img, how_img, lboard_img = button_images()
     # Main Menu loop
     running = True
     frame_flag = True
     opacity = 0
+    #INITIAL GAMESTATE
     gamestate = 0
     enemyStopwatch = 0
+    #obstacle vars
+    air_time = 0
+    cloud_time = 0
+    ground_time = 0
+
+    air_speed = 180
+    ground_speed = 420
+
+    frame_counter = 0
+    checker = True
+
     while running:
         if gamestate == 0:
             for event in pygame.event.get():
@@ -40,7 +55,7 @@ def game():
                     if credits_rect.collidepoint(pos):
                         print('credits') # <----- PUT CREDIT MENU HERE
             # Plane animation
-            screen.blit(background, (0, 0))
+            screen.blit(background1, (0, 0))
             plane_rect, frame_flag = plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag)
 
             # Buttons / GUI Functionality
@@ -69,8 +84,46 @@ def game():
             if (time - enemyStopwatch) > 2000:
                 enemies.add(Enemy(1400,randint(100,620)))
                 enemyStopwatch = pygame.time.get_ticks()
-            screen.blit(background,(0,0))
+            screen.blit(sky_surf_scaled, (0,0))
+
+            ground_time += 1
+            air_time += 1
+            cloud_time += 1
+            frame_counter += 1
             
+            if (frame_counter > 300) and (checker == True):
+                air_speed -= 2
+                ground_speed -= 5
+                frame_counter = 0
+                if (air_speed < 120) or (ground_speed < 180):
+                    checker = False
+
+            if (air_time > air_speed):
+                obj2 = random.randint(0,1)
+                x = random.randint(400, 1280)
+                slope = random.randint(1,10)
+                air_group.add(obstacles.AirObstacles(air_obstacles[obj2], x, slope))
+                air_time = 0
+            
+            if (cloud_time > 180):
+                backgrounds.add(background.Background(clouds[random.randint(0,2)]))
+                cloud_time = 0
+
+            if (ground_time > ground_speed):
+                ground_group.add(obstacles.GroundObstacles(ground_obstacles[random.randint(0,2)]))
+                ground_time = 0
+
+            backgrounds.draw(screen)
+            backgrounds.update()
+
+            air_group.draw(screen)
+            air_group.update()
+
+            ground_group.draw(screen)
+            ground_group.update()
+
+            score()
+                    
             player_group.draw(screen)
             player_group.update()
             enemies.draw(screen)
@@ -139,6 +192,12 @@ def plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag):
     frame_flag = not frame_flag
     return plane_rect, frame_flag
 
+def score():
+        current_time = pygame.time.get_ticks() - start_time
+        time = str(current_time/1000)
+        score_surf = font.render(time, False, (64, 64, 64))
+        score_rect = score_surf.get_rect(topleft = (0,0))
+        screen.blit(score_surf, score_rect) 
 
 def button_images():
     play_img = pygame.image.load("graphics/play.png")
@@ -168,6 +227,21 @@ if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
+    clouds = ["cloud1", "cloud5", "cloud9"] 
+    ground_obstacles = ["ground obj 1", "ground obj 2", "ground obj 3"]
+    air_obstacles = ["asteroid", "anvil"]
+
+    backgrounds = pygame.sprite.Group()
+    ground_group = pygame.sprite.Group()
+    air_group = pygame.sprite.Group()
+
+    sky_surf = pygame.image.load("graphics/backgrounds/uncolored_hills.png").convert()
+    sky_surf_scaled = pygame.transform.scale(sky_surf, (1280,720))
+
+    clock = pygame.time.Clock()
+    start_time = 0
+    font = pygame.font.Font(None, 50)
+    # --------------------------------------------------------------------------------------------
     #player
     player = Player()
     player_group = pygame.sprite.GroupSingle()
@@ -183,7 +257,6 @@ if __name__ == "__main__":
     rocket_group = pygame.sprite.Group()
     #enemies
     enemies = pygame.sprite.Group()
-
     # Main game loop
     game()
 

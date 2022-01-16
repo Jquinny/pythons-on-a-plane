@@ -27,3 +27,4 @@ def retrieveLeaderboard():
     leaderboard.reverse()
 
     return leaderboard
+

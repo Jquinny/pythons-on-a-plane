@@ -17,7 +17,7 @@ def how_menu(screen, how_img, bubble_font, hand):
 	pygame.display.update()
 
 	# How to Play Instructions
-	instructions = "Dodge towers and falling objects! Shoot your enemies!"
+	instructions = "Dodge pipes and falling objects! Shoot your enemies!"
 	font_img = bubble_font.render(instructions, True, (255, 255, 255))
 	inst_rect = font_img.get_rect(center=(640, 350))
 	screen.blit(font_img, inst_rect)

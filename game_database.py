@@ -1,5 +1,6 @@
 import pygame
 import pyrebase
+import pygame_menu
 
 firebaseConfig = {
   'apiKey': "AIzaSyCeenNw5LLxwKzSIrIBllcBtShWrw2KeS4",
@@ -40,8 +41,8 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 
 
-def addScore(username, name, score): 
-    db.child('users').child(username).update({'name': name, 'score': score})
+def addScore(username, score): 
+    db.child('users').child(username).update({'score': score})
 
 def main():
 
@@ -51,7 +52,6 @@ def main():
     for person in users_by_score.each():
         leaderboard.append(person)  
 
-    addScore('user5', 'Larry', 5000)
 
 
 if __name__ == "__main__":

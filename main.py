@@ -12,6 +12,7 @@ import obstacles
 import background
 
 def game():
+    global start_time
     # Initialize main menu appearance
     background1 = pygame.image.load("graphics/BG.png")
     background1 = pygame.transform.scale(background1, (1280, 1280)) # 1280, 1280
@@ -48,11 +49,12 @@ def game():
                 if event.type == QUIT:
                     running = False
                 # If any of the buttons are clicked
-                if pygame.time.get_ticks() > 5000: #ensures everything is loaded properly before startup
+                if pygame.time.get_ticks() > 3000: #ensures everything is loaded properly before startup
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         pos = pygame.mouse.get_pos()
                         if play_rect.collidepoint(pos):
                             gamestate = 1 # <-------- PUT GAMEPLAY FUNCTION HERE
+                            start_time = pygame.time.get_ticks()
                         if how_rect.collidepoint(pos):
                             pass # <------ PUT HOW TO PLAY MENU HERE
                         if lboard_rect.collidepoint(pos):
@@ -253,8 +255,8 @@ if __name__ == "__main__":
     sky_surf_scaled = pygame.transform.scale(sky_surf, (1280,720))
 
     clock = pygame.time.Clock()
-    start_time = 0
     font = pygame.font.Font(None, 50)
+    start_time = 0
     # -------------------------------------------------------------------------------------------
 
     #sounds

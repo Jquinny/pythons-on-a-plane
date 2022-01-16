@@ -27,16 +27,17 @@ air_group = pygame.sprite.Group()
 
 sky_surf = pygame.image.load("graphics/backgrounds/uncolored_hills.png").convert()
 sky_surf_scaled = pygame.transform.scale(sky_surf, (1280,720))
+
 clock = pygame.time.Clock()
+air_time = 0
+cloud_time = 0
+ground_time = 0
 
-cloud_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(cloud_timer, 3000)
+air_speed = 180
+ground_speed = 420
 
-ground_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(ground_timer, 9000) 
-
-air_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(air_timer, 2000) 
+frame_counter = 0
+checker = True
 
 font = pygame.font.Font(None, 50)
 start_time = 0
@@ -55,31 +56,44 @@ while running:
     	# If user hits the x button on pygame window
         if event.type == QUIT:
             running = False
-        
-        if event.type == cloud_timer:
-            backgrounds.add(background.Background(clouds[random.randint(0,2)]))
-            print(backgrounds.sprites())
 
-        if event.type == ground_timer:
-            ground_group.add(obstacles.GroundObstacles(ground_obstacles[random.randint(0,2)]))
-            print(ground_group.sprites())
-
-        if event.type == air_timer:
-            obj2 = random.randint(0,1)
-            x = random.randint(400, 1280)
-            slope = random.randint(1,10)
-            air_group.add(obstacles.AirObstacles(air_obstacles[0], x, slope))
-            print(air_group.sprites())
-    
     screen.blit(sky_surf_scaled, (0,0))
 
-    backgrounds.draw(screen)
-    ground_group.draw(screen)
-    air_group.draw(screen)
+    ground_time += 1
+    air_time += 1
+    cloud_time += 1
+    frame_counter += 1
+    
+    if (frame_counter > 300) and (checker == True):
+        air_speed -= 2
+        ground_speed -= 5
+        frame_counter = 0
+        if (air_speed < 120) or (ground_speed < 180):
+            checker = False
 
+    if (air_time > air_speed):
+        obj2 = random.randint(0,1)
+        x = random.randint(400, 1280)
+        slope = random.randint(1,10)
+        air_group.add(obstacles.AirObstacles(air_obstacles[obj2], x, slope))
+        air_time = 0
+    
+    if (cloud_time > 180):
+        backgrounds.add(background.Background(clouds[random.randint(0,2)]))
+        cloud_time = 0
+
+    if (ground_time > ground_speed):
+        ground_group.add(obstacles.GroundObstacles(ground_obstacles[random.randint(0,2)]))
+        ground_time = 0
+
+    backgrounds.draw(screen)
     backgrounds.update()
-    ground_group.update()
+
+    air_group.draw(screen)
     air_group.update()
+
+    ground_group.draw(screen)
+    ground_group.update()
 
     score()
     pygame.display.update()

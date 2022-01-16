@@ -54,27 +54,28 @@ def game():
     player_group = pygame.sprite.GroupSingle()
     player_group.add(player)
 
-    ####
+    # Menu constants
     hand = pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND)
     bubble_font = pygame.font.Font("graphics/bubble.ttf", 36)
-
-
+    big_bubble = pygame.font.Font("graphics/bubble.ttf", 96)
+    title = big_bubble.render("PYTHONS ON A PLANE", True, (255, 255, 255))
+    credits = bubble_font.render("CREDITS", True, (255, 255, 255))
 
     while running:
         if gamestate == 0:
-
-            # Plane animation
             screen.blit(background1, (0, 0))
-            plane_rect, frame_flag = plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag)
 
             # Buttons / GUI Functionality
             play_rect = buttons(play_img, opacity, (width/2, height/2))
             how_rect = buttons(how_img, opacity, (320, 550))
             lboard_rect = buttons(lboard_img, opacity, (920, 550))
-            font = pygame.font.SysFont(None, 36)
-            credits = font.render("CREDITS", True, (255, 255, 255))
-            credits_rect = credits.get_rect(center=(width/2, 650))
-            screen.blit(credits, credits_rect)
+            credits_rect = buttons(credits, opacity, (width/2, 650))
+            banner = pygame.Rect(25,75,1230,125)
+            pygame.draw.rect(screen, (50, 205, 50), banner, border_radius = 50)
+            title_rect = buttons(title, opacity, (width/2, 130))
+
+            # Plane Animation
+            plane_rect, frame_flag = plane_animation(plane_rect, plane_fly1, plane_fly2, frame_flag)
             pygame.display.update()
             opacity += 3
 

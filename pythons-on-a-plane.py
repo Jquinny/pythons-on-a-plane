@@ -163,11 +163,11 @@ class Rocket(pygame.sprite.Sprite):
     def explosion(self):
         if self.animationState == -1:
             self.animationState = 0
-            self.rect.x -= 50
-            self.rect.y -= 50
             enemyDie.play()
             enemyDie.set_volume(0.2)
         elif self.animationState == 0:
+            self.rect.x -= 50
+            self.rect.y -= 50
             self.image = self.one
             self.animationState = 1
         elif self.animationState == 1:

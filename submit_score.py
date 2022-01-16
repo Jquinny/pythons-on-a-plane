@@ -15,6 +15,11 @@ def display_score():
 
     return current_score
 
+def display_text():
+    text_surf = my_font.render('Enter username below:', False, (255, 255, 255))
+    text_rect = text_surf.get_rect(center = (640, 320))
+    screen.blit(text_surf, text_rect)
+
 class InputBox:
 
     def __init__(self, x, y, w, h, text=''):
@@ -67,7 +72,7 @@ class InputBox:
 
 def main():
     clock = pygame.time.Clock()
-    input_box = InputBox(535, 344, 140, 32)
+    input_box = InputBox(545, 344, 140, 32)
     done = False
 
     while not done:
@@ -83,10 +88,11 @@ def main():
         input_box.update()
 
         screen.fill((30, 30, 30))
-        display_score()
 
         if not input_box.submitted:
             input_box.draw(screen)
+            display_score()
+            display_text()
 
         pygame.display.flip()
         clock.tick(30)

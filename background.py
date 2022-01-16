@@ -2,8 +2,10 @@ import pygame
 from random import randint
 
 class Background(pygame.sprite.Sprite):
-    def __init__(self, type):
-        super().__init__() 
+    def __init__(self, type, x_change):
+        super().__init__()
+        self.x_change = x_change
+
         if type == "cloud1":
             cloud1_surf = pygame.image.load("graphics/PNG/cloud1.png").convert_alpha()
             self.image = cloud1_surf
@@ -21,7 +23,7 @@ class Background(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(midbottom = (1400, randint(50, 600)))
 
     def move_clouds(self):
-        self.rect.x -= 2
+        self.rect.x -= self.x_change
 
     def update(self):
         self.move_clouds()

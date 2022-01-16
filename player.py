@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += -10
         if keys[pygame.K_w] and self.rect.y > -50:
             self.rect.y += -10
-        if keys[pygame.K_s] and self.rect.y < 650:
+        if keys[pygame.K_s] and self.rect.y < 700:
             self.rect.y += 10
         if keys[pygame.K_d] and self.rect.x < 1100:
             self.rect.x += 10

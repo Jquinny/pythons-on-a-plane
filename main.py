@@ -45,6 +45,7 @@ def game():
     ground_speed = 420
 
     frame_counter = 0
+    frame_counter2 = 0
     counter = 0
     checker = True
     checker2 = True
@@ -130,24 +131,26 @@ def game():
             air_time += 1
             cloud_time += 1
             frame_counter += 1
+            frame_counter2 += 1
             
             # increase spawn rate
-            if (frame_counter > 300) and (checker == True):
+            if (frame_counter > 120) and (checker == True):
                 air_speed -= 3
                 ground_speed -= 10
+                print(ground_speed, air_speed)
                 frame_counter = 0
                 if (air_speed < 60) or (ground_speed < 120):
                     checker = False
 
             # increase obstacle/background speed
-            if (frame_counter > 180) and (checker2 == True):
+            if (frame_counter2 > 180) and (checker2 == True):
                 counter += 1
                 air_y_change += .001
                 air_slope_change += 0.0005
                 cloud_x_change += 0.001
                 ground_x_change += 0.001
-                frame_counter = 0
-                if (counter > 16):
+                frame_counter2 = 0
+                if (counter > 33):
                     checker2 = False
 
             if (air_time > air_speed):

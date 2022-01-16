@@ -73,13 +73,13 @@ class AirObstacles(pygame.sprite.Sprite):
             anvil_surf = pygame.image.load("graphics/PNG/question_block.png").convert()
             anvil_scaled = pygame.transform.scale(anvil_surf, (75, 75))
             self.image = anvil_scaled
-            self.rect = self.image.get_rect(midbottom = (x,-100))
+            self.rect = self.image.get_rect(midbottom = (x,-50))
 
         else:
             asteroid_surf = pygame.image.load("graphics/PNG/asteroid4.png")
             asteroid_scaled = pygame.transform.scale(asteroid_surf, (75, 75))
             self.image = asteroid_scaled
-            self.rect = self.image.get_rect(midbottom = (x,-100))
+            self.rect = self.image.get_rect(midbottom = (randint(700, 1200),-50))
     
     def move_asteroid(self, slope):
         self.rect.x -= 4 + self.y_change

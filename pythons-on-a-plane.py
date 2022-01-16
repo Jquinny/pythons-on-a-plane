@@ -21,19 +21,16 @@ def game():
 	game_state = 0
 	#other
 	background1 = pygame.image.load('graphics/backgrounds/colored_castle.png')
-	# Initialize pygame and set a screen variable
-	screen = pygame.display.set_mode(size)
 	clock = pygame.time.Clock()
-	#player
-	player = Player()
-	player_group = pygame.sprite.GroupSingle()
-	player_group.add(player)
 
-	#sounds
+	#soundsd
 	pygame.mixer.music.load('sfx/calm.wav')
 	pygame.mixer.music.play(-1)
 	pygame.mixer.music.set_volume(0.1)
 	shoot = pygame.mixer.Sound('sfx/playershoot.wav')
+	player = Player()
+	player_group = pygame.sprite.GroupSingle()
+	player_group.add(player)
 	#rocket 
 	rocket_group = pygame.sprite.Group()
 	#enemies
@@ -271,4 +268,3 @@ if __name__ == "__main__":
 
 	# Main game loop
 	game()
-	pygame.quit()

@@ -207,12 +207,18 @@ def game():
                 if pygame.sprite.spritecollideany(player,enemies):
                     player.image = pygame.transform.scale(player.dead, (116,80))
                     gamestate = 2
+                    crash.play()
+                    crash.set_volume(0.2)
                 if pygame.sprite.spritecollideany(player,air_group):
                     player.image = pygame.transform.scale(player.dead, (116,80))
                     gamestate = 2
+                    crash.play()
+                    crash.set_volume(0.2)
                 if pygame.sprite.spritecollideany(player,ground_group):
                     player.image = pygame.transform.scale(player.dead, (116,80))
                     gamestate = 2
+                    crash.play()
+                    crash.set_volume(0.2)
             pygame.sprite.groupcollide(rocket_group,air_group,False,True)
             pygame.display.update()
             clock.tick(60)

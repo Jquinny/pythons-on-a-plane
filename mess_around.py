@@ -74,7 +74,7 @@ while running:
     if (air_time > air_speed):
         obj2 = random.randint(0,1)
         x = random.randint(400, 1280)
-        slope = random.randint(1,10)
+        slope = random.randint(1,8)
         air_group.add(obstacles.AirObstacles(air_obstacles[obj2], x, slope))
         air_time = 0
     
@@ -89,11 +89,11 @@ while running:
     backgrounds.draw(screen)
     backgrounds.update()
 
-    air_group.draw(screen)
-    air_group.update()
-
     ground_group.draw(screen)
     ground_group.update()
+
+    air_group.draw(screen)
+    air_group.update()
 
     score()
     pygame.display.update()

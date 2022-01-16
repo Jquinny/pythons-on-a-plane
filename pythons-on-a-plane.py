@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.animationState = 0
         self.image = pygame.transform.scale(self.original1, (232,159))
         self.rect = self.image.get_rect()
+        self.stopwatch = 0
     def create_rocket(self):
         return Rocket(self.rect.x,self.rect.y)
     def player_shoot(self):
@@ -63,8 +64,10 @@ class Rocket(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load('graphics/bullet/shell.gif').convert_alpha()
         self.rect = self.image.get_rect(center = (pos_x+180,pos_y+118))
+        self.speed = 0
     def update(self):
-        self.rect.x += 5
+        self.speed += 0.2
+        self.rect.x += self.speed
         if self.rect.x >= 1400:
             self.kill()
         
@@ -79,7 +82,6 @@ background = pygame.image.load('graphics/backgrounds/colored_castle.png')
 # Initialize pygame and set a screen variable
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
-
 #player
 player = Player()
 player_group = pygame.sprite.GroupSingle()
@@ -87,21 +89,22 @@ player_group.add(player)
 
 #rocket 
 rocket_group = pygame.sprite.Group()
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            rocket_group.add(player.create_rocket())
+            time = pygame.time.get_ticks()
+            if (time - player.stopwatch) > 240:
+                rocket_group.add(player.create_rocket())
+                player.stopwatch = pygame.time.get_ticks()
     screen.blit(background,(0,0))
             
     player_group.draw(screen)
     player_group.update()
     rocket_group.draw(screen)
     rocket_group.update()
-    #rockets()
     pygame.display.update()
     clock.tick(60)
 

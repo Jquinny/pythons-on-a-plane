@@ -70,7 +70,7 @@ def game_over_screen(screen, score, hand):
         # Blit the input_box rect.
         pygame.draw.rect(screen, color, input_box, 2)
         pygame.display.flip()
-    pygame.quit()
+    #pygame.quit() this line causes an error
 
 def add_text(screen, score):
     pos = (390, 220)

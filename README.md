@@ -1,7 +1,7 @@
 # pythons-on-a-plane
 
 Welcome to Pythons on a Plane, an endless runner game reminicent of
-games such as jetpack joyride and flappy bird
+games such as jetpack joyride and flappy bird.
 
 Steps for Installing:
 
@@ -16,3 +16,5 @@ on Windows (should work on mac as well):
      as admin if you get an OS error)
   4. git clone this repository and run the command python -u main.py
      or python3 main.py
+     
+See the game in action: https://www.youtube.com/watch?v=T-iTU2XvVp8
